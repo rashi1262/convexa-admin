@@ -1,11 +1,12 @@
 // ToolPage.js
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import Table from '../../common/Table'; 
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import useModal from '../../hooks/useModal'; 
 import DeleteConfirmationModal from '../../common/DeleteConfirmationModal';
 import ViewModal from '../../common/ViewModal';
+import { BASE_URL } from '../../common/siteConstants';
 
 const ToolPage = () => {
   const [tools, setTools] = useState([]);
@@ -23,7 +24,7 @@ const ToolPage = () => {
   useEffect(() => {
     const fetchTools = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/getAllToolWithoutPagination'); 
+        const response = await axios.get(`${BASE_URL}/api/getallbot`); 
         setTools(response.data);
       } catch (error) {
         console.error("Error fetching tools:", error);
@@ -36,7 +37,7 @@ const ToolPage = () => {
   const handleDeleteConfirm = async () => {
     if (selectedItem) {
       try {
-        await axios.delete(`http://localhost:8080/deleteTool/${selectedItem._id}`);
+        await axios.delete(`${BASE_URL}/api/deleteUserById/${selectedItem._id}`);
         setTools((prevTools) => prevTools.filter(tool => tool._id !== selectedItem._id));
       } catch (error) {
         console.error("Error deleting tool:", error);
@@ -46,22 +47,18 @@ const ToolPage = () => {
   };
 
   const columns = [
-    { field: 'title', header: 'Tool Name' },
-    { field: 'category', header: 'Category' },
-    { field: 'averageRating', header: 'Average Rating' },
+    { field: 'name', header: 'Name' },
+    { field: 'email', header: 'Email' },
+    { field: 'plan', header: 'Plan' },
   ];
 
   const fieldsToShow = {
-    "Title": "title",
-    "Category": "category",
-    "Description": "description",
-    "Long Description": "longDescription",
-    "Visit Link": "visit_link",
-    "Status": "status",
-    "Visit Count": "visit_count",
-    "Tool Image": "firebase_image_url",
-    "Tags": "tags",
-    "Ranking": "ranking"
+    "Name": "name",
+    "Email": "email",
+    "Referral": "referral",
+    "Role": "role",
+    "Plan":"plan"
+   
   };
   return (
     <div className="tool-page">

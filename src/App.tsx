@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-
+import { Toaster } from 'sonner';
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
@@ -21,6 +21,9 @@ import Category from './pages/category/Category'
 import AddCategory from './pages/category/AddCategory';
 import UpdateTool from './pages/tools/UpdateTool';
 import UpdateCategory from './pages/category/UpdateCategory';
+import Partner from './pages/partners/Partners';
+import UpdatePartners from './pages/partners/UpdatePartners';
+import AddPartner from './pages/partners/AddPartner';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -38,12 +41,14 @@ function App() {
     <Loader />
   ) : (
     <DefaultLayout>
+            <Toaster richColors position="bottom-right" />
+
       <Routes>
         <Route
           index
           element={
             <>
-              <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="eCommerce Dashboard | Convex-Ai Admin - Admin Dashboard " />
               <ECommerce />
             </>
           }
@@ -52,8 +57,17 @@ function App() {
           path="/tools"
           element={
             <>
-              <PageTitle title="AI Tools | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Convex-Ai Admin | Convex-Ai Admin -  Admin Dashboard " />
               <Tools />
+            </>
+          }
+        />
+        <Route
+          path="/partners"
+          element={
+            <>
+              <PageTitle title="Convex-Ai Admin | Convex-Ai Admin -  Admin Dashboard " />
+              <Partner />
             </>
           }
         />
@@ -61,8 +75,17 @@ function App() {
           path="/addTool"
           element={
             <>
-              <PageTitle title="Add Tools | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Add Tools | Convex-Ai Admin - Admin Dashboard " />
               <AddTool />
+            </>
+          }
+        />
+        <Route
+          path="/addpartner"
+          element={
+            <>
+              <PageTitle title="Add Tools | Convex-Ai Admin - Admin Dashboard " />
+              <AddPartner />
             </>
           }
         />
@@ -70,7 +93,7 @@ function App() {
           path="/category"
           element={
             <>
-              <PageTitle title="Add Tools | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Add Tools | Convex-Ai Admin - Admin Dashboard" />
               <Category />
             </>
           }
@@ -79,7 +102,7 @@ function App() {
           path="/addCategory"
           element={
             <>
-              <PageTitle title="Add Tools | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Add Tools | Convex-Ai Admin -Admin Dashboard " />
               <AddCategory />
             </>
           }
@@ -88,7 +111,7 @@ function App() {
           path="/category/edit/:id"
           element={
             <>
-              <PageTitle title="Add Tools | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Add Tools | Convex-Ai Admin - Admin Dashboard " />
               <UpdateCategory />
             </>
           }
@@ -97,8 +120,17 @@ function App() {
           path="/tool/edit/:id"
           element={
             <>
-              <PageTitle title="Add Tools | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Add User | Convex-Ai Admin -Admin Dashboard " />
               <UpdateTool />
+            </>
+          }
+        />
+        <Route
+          path="/partner/edit/:id"
+          element={
+            <>
+              <PageTitle title="Add User | Convex-Ai Admin -Admin Dashboard " />
+              <UpdatePartners />
             </>
           }
         />
@@ -106,7 +138,7 @@ function App() {
           path="/profile"
           element={
             <>
-              <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Profile | Convex-Ai Admin - Admin Dashboard " />
               <Profile />
             </>
           }
@@ -115,7 +147,7 @@ function App() {
           path="/forms/form-elements"
           element={
             <>
-              <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Form Elements | Convex-Ai Admin - Admin Dashboard " />
               <FormElements />
             </>
           }
@@ -124,7 +156,7 @@ function App() {
           path="/forms/form-layout"
           element={
             <>
-              <PageTitle title="Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Form Layout | Convex-Ai Admin - Admin Dashboard " />
               <FormLayout />
             </>
           }
@@ -133,7 +165,7 @@ function App() {
           path="/tables"
           element={
             <>
-              <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Tables | Convex-Ai Admin - Admin Dashboard " />
               <Tables />
             </>
           }
@@ -142,7 +174,7 @@ function App() {
           path="/settings"
           element={
             <>
-              <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Settings | Convex-Ai Admin - Admin Dashboard " />
               <Settings />
             </>
           }
@@ -151,7 +183,7 @@ function App() {
           path="/chart"
           element={
             <>
-              <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Basic Chart | Convex-Ai Admin - Admin Dashboard " />
               <Chart />
             </>
           }
@@ -160,7 +192,7 @@ function App() {
           path="/ui/alerts"
           element={
             <>
-              <PageTitle title="Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Alerts | Convex-Ai Admin - Admin Dashboard " />
               <Alerts />
             </>
           }
@@ -169,7 +201,7 @@ function App() {
           path="/ui/buttons"
           element={
             <>
-              <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Buttons | Convex-Ai Admin - Admin Dashboard " />
               <Buttons />
             </>
           }
@@ -178,7 +210,7 @@ function App() {
           path="/auth/signin"
           element={
             <>
-              <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Signin | Convex-Ai Admin - Admin Dashboard " />
               <SignIn />
             </>
           }
@@ -187,7 +219,7 @@ function App() {
           path="/auth/signup"
           element={
             <>
-              <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Signup | Convex-Ai Admin - vAdmin Dashboard " />
               <SignUp />
             </>
           }
