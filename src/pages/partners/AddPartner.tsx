@@ -4,6 +4,7 @@ import { Input, MultiSelect } from '../../common/FormInputs'; // assuming you ha
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
+import { BASE_URL } from '../../common/siteConstants';
 
 const AddPartner = () => {
   const { handleSubmit, control, reset, watch } = useForm();
@@ -36,7 +37,7 @@ const AddPartner = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post('http://localhost:5000/partner/createPartner', data);
+      const response = await axios.post(`${BASE_URL}/partner/createPartner`, data);
       console.log('Partner added successfully', response.data);
       reset(); // Clear form after successful submission
     } catch (error) {
