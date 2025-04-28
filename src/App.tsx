@@ -15,11 +15,11 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
-import Tools from './pages/tools/Tools';
-import AddTool from './pages/tools/AddTool';
+import Tools from './pages/tools/Partner';
+import AddTool from './pages/tools/AddPartner';
 import Category from './pages/category/Category'
 import AddCategory from './pages/category/AddCategory';
-import UpdateTool from './pages/tools/UpdateTool';
+import UpdateTool from './pages/tools/UpdatePartner';
 import UpdateCategory from './pages/category/UpdateCategory';
 import Partner from './pages/partners/Partners';
 import UpdatePartners from './pages/partners/UpdatePartners';
@@ -54,7 +54,7 @@ function App() {
           }
         />
         <Route
-          path="/tools"
+          path="/users"
           element={
             <>
               <PageTitle title="Convex-Ai Admin | Convex-Ai Admin -  Admin Dashboard " />
@@ -117,7 +117,7 @@ function App() {
           }
         />
         <Route
-          path="/tool/edit/:id"
+          path="/user/edit/:id"
           element={
             <>
               <PageTitle title="Add User | Convex-Ai Admin -Admin Dashboard " />

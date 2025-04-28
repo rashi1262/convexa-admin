@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CardDataStats from '../../components/CardDataStats';
 import ChartOne from '../../components/Charts/ChartOne';
 import ChartThree from '../../components/Charts/ChartThree';
@@ -6,12 +6,41 @@ import ChartTwo from '../../components/Charts/ChartTwo';
 import ChatCard from '../../components/Chat/ChatCard';
 import MapOne from '../../components/Maps/MapOne';
 import TableOne from '../../components/Tables/TableOne';
+import axios from 'axios';
+import { BASE_URL } from '../../common/siteConstants';
 
 const ECommerce: React.FC = () => {
+  const [userCount, setUserCount] = useState("");
+  const [partnerCount, setPartnerCount] = useState("");
+  
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        // Fetch bots
+        const botResponse = await axios.get(`${BASE_URL}/api/getallbot`);
+        setUserCount(botResponse.data.length.toString());
+  
+        // Fetch partners
+        const partnerResponse = await axios.get(`${BASE_URL}/partner/getAllPartners`);
+        setPartnerCount(partnerResponse.data.length.toString());
+  
+      } catch (error) {
+        console.error("Error fetching counts:", error);
+      }
+    };
+  
+    fetchCounts();
+  }, []);
+  
+  console.log(userCount, "userCount");
+  console.log(partnerCount, "partnerCount");
+  
+  
+
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
+        {/* <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -52,8 +81,8 @@ const ECommerce: React.FC = () => {
               fill=""
             />
           </svg>
-        </CardDataStats>
-        <CardDataStats title="Total Product" total="2.450" rate="2.59%" levelUp>
+        </CardDataStats> */}
+        <CardDataStats title="Total Partners" total={partnerCount} rate="2.59%" levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -72,7 +101,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Users" total="3.456" rate="0.95%" levelDown>
+        <CardDataStats title="Total Users" total={userCount} rate="0.95%" levelDown>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -100,12 +129,12 @@ const ECommerce: React.FC = () => {
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartOne />
         <ChartTwo />
-        <ChartThree />
-        <MapOne />
-        <div className="col-span-12 xl:col-span-8">
+        {/* <ChartThree /> */}
+        {/* <MapOne /> */}
+        {/* <div className="col-span-12 xl:col-span-8">
           <TableOne />
         </div>
-        <ChatCard />
+        <ChatCard /> */}
       </div>
     </>
   );

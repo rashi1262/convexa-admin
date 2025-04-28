@@ -8,7 +8,7 @@ import DeleteConfirmationModal from '../../common/DeleteConfirmationModal';
 import ViewModal from '../../common/ViewModal';
 import { BASE_URL } from '../../common/siteConstants';
 
-const Partner = () => {
+const ToolPage = () => {
   const [tools, setTools] = useState([]);
   const navigate = useNavigate();
   const {
@@ -24,7 +24,7 @@ const Partner = () => {
   useEffect(() => {
     const fetchTools = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/partner/getAllPartners`); 
+        const response = await axios.get(`${BASE_URL}/api/getallbot`); 
         setTools(response.data);
       } catch (error) {
         console.error("Error fetching tools:", error);
@@ -37,7 +37,7 @@ const Partner = () => {
   const handleDeleteConfirm = async () => {
     if (selectedItem) {
       try {
-        await axios.delete(`${BASE_URL}/partner/deletePartner/${selectedItem._id}`);
+        await axios.delete(`${BASE_URL}/api/deleteUserById/${selectedItem._id}`);
         setTools((prevTools) => prevTools.filter(tool => tool._id !== selectedItem._id));
       } catch (error) {
         console.error("Error deleting tool:", error);
@@ -47,38 +47,30 @@ const Partner = () => {
   };
 
   const columns = [
-    { field: 'companyName', header: 'companyName' },
+    { field: 'name', header: 'Name' },
     { field: 'email', header: 'Email' },
-    { field: 'phone', header: 'Phone' },
-    { field: 'city', header: 'City' },
+    { field: 'plan', header: 'Plan' },
   ];
 
   const fieldsToShow = {
-    "companyName": "companyName",
-    "contactPerson": "contactPerson",
+    "Name": "name",
     "Email": "email",
-    "linkedin": "linkedin",
-    "Phone": "phone",
-    "address": "address",
-    "country": "country",
-    "state": "state",
-    "City": "city",
-    "pincode":"pincode",
-    "selectedServices":"selectedServices",
-    "selectedSubServices":"selectedSubServices",
+    "Referral": "referral",
+    "Role": "role",
+    "Plan":"plan"
    
   };
   return (
     <div className="tool-page">
-      <h1>Partners</h1>
-      <div>
-        <Link to='/addpartner'>Add Partner</Link>
-      </div>
+      <h1>Users</h1>
+      {/* <div>
+        <Link to='/addTool'>Add Tool</Link>
+      </div> */}
       <Table 
         data={tools} 
         columns={columns}
         onView={handleOpenViewModal} 
-        onUpdate={(item) => navigate(`/partner/edit/${item._id}`)}
+        onUpdate={(item) => navigate(`/user/edit/${item._id}`)}
 
         onDelete={handleOpenDeleteModal} 
       />
@@ -102,4 +94,4 @@ const Partner = () => {
   );
 };
 
-export default Partner;
+export default ToolPage;

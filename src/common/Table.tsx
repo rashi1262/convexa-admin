@@ -48,7 +48,7 @@ const TableThree = ({ data, columns, onDelete, onView, onUpdate }) => {
             ) : (
               <tr>
                 <td colSpan={columns.length + 1} className="text-center py-5">
-                  No tools found.
+                  No Users found.
                 </td>
               </tr>
             )}
