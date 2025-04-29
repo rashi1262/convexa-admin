@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
-import SignUp from './pages/Authentication/SignUp';
 import Chart from './pages/Chart';
 import ECommerce from './pages/Dashboard/ECommerce';
 import FormElements from './pages/Form/FormElements';
@@ -15,19 +14,22 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
-import Tools from './pages/tools/Partner';
-import AddTool from './pages/tools/AddPartner';
-import Category from './pages/category/Category'
+import Tools from './pages/tools/User';
+import AddTool from './pages/tools/AddUser';
+import Category from './pages/category/Category';
 import AddCategory from './pages/category/AddCategory';
-import UpdateTool from './pages/tools/UpdatePartner';
+import UpdateTool from './pages/tools/UpdateUser';
 import UpdateCategory from './pages/category/UpdateCategory';
 import Partner from './pages/partners/Partners';
 import UpdatePartners from './pages/partners/UpdatePartners';
 import AddPartner from './pages/partners/AddPartner';
+import { AuthProvider, useAuth } from './common/ProtectedRoutes';  // Import the AuthProvider
 
 function App() {
-  const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
+  const { isAuthenticated } = useAuth();  // Access authentication state from the context
+  const [loading, setLoading] = useState<boolean>(true);
+console.log(isAuthenticated,"isAuthenticatedisAuthenticated");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -37,14 +39,32 @@ function App() {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
-  return loading ? (
-    <Loader />
-  ) : (
-    <DefaultLayout>
-            <Toaster richColors position="bottom-right" />
+  if (loading) {
+    return <Loader />;
+  }
 
+  if (!isAuthenticated) {
+    return (
       <Routes>
+        <Route path="*" element={<Navigate to="/auth/signin" replace />} />
         <Route
+          path="/auth/signin"
+          element={
+            <>
+              <PageTitle title="Signin | Convex-Ai Admin - Admin Dashboard" />
+              <SignIn />
+            </>
+          }
+        />
+      </Routes>
+    );
+  }
+
+  return (
+    <DefaultLayout>
+      <Toaster richColors position="bottom-right" />
+      <Routes>
+      <Route
           index
           element={
             <>
@@ -206,27 +226,16 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/auth/signin"
-          element={
-            <>
-              <PageTitle title="Signin | Convex-Ai Admin - Admin Dashboard " />
-              <SignIn />
-            </>
-          }
-        />
-        <Route
-          path="/auth/signup"
-          element={
-            <>
-              <PageTitle title="Signup | Convex-Ai Admin - vAdmin Dashboard " />
-              <SignUp />
-            </>
-          }
-        />
+        {/* Other routes... */}
       </Routes>
     </DefaultLayout>
   );
 }
 
-export default App;
+const AppWrapper = () => (
+  <AuthProvider>  {/* Wrap the whole application with AuthProvider */}
+    <App />
+  </AuthProvider>
+);
+
+export default AppWrapper;

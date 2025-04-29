@@ -1,7 +1,23 @@
+import { useEffect, useState } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import userThree from '../images/user/user-03.png';
-
+interface UserData {
+  name?: string;
+  email?: string;
+  photoURL?: string;
+  // Add more fields if present in localStorage
+}
 const Settings = () => {
+  const [userData, setUserData] = useState<UserData>({});
+  
+    useEffect(() => {
+      const data = localStorage.getItem('userData');
+      if (data) {
+        setUserData(JSON.parse(data));
+      }
+    }, []);
+    console.log(userData,"abfsd");
+    
   return (
     <>
       <div className="mx-auto max-w-270">
@@ -57,12 +73,13 @@ const Settings = () => {
                           name="fullName"
                           id="fullName"
                           placeholder="Devid Jhon"
-                          defaultValue="Devid Jhon"
+                          // defaultValue="Devid Jhon"
+                          defaultValue={userData.name}
                         />
                       </div>
                     </div>
 
-                    <div className="w-full sm:w-1/2">
+                    {/* <div className="w-full sm:w-1/2">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
                         htmlFor="phoneNumber"
@@ -77,7 +94,7 @@ const Settings = () => {
                         placeholder="+990 3343 7865"
                         defaultValue="+990 3343 7865"
                       />
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className="mb-5.5">
@@ -119,7 +136,7 @@ const Settings = () => {
                         name="emailAddress"
                         id="emailAddress"
                         placeholder="devidjond45@gmail.com"
-                        defaultValue="devidjond45@gmail.com"
+                        defaultValue={userData.email}
                       />
                     </div>
                   </div>
@@ -137,8 +154,8 @@ const Settings = () => {
                       name="Username"
                       id="Username"
                       placeholder="devidjhon24"
-                      defaultValue="devidjhon24"
-                    />
+                      defaultValue={userData.name}
+                      />
                   </div>
 
                   <div className="mb-5.5">

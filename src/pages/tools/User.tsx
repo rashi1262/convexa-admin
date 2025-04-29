@@ -1,9 +1,9 @@
 // ToolPage.js
-import  { useState, useEffect } from 'react';
-import Table from '../../common/Table'; 
+import { useState, useEffect } from 'react';
+import Table from '../../common/Table';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import useModal from '../../hooks/useModal'; 
+import useModal from '../../hooks/useModal';
 import DeleteConfirmationModal from '../../common/DeleteConfirmationModal';
 import ViewModal from '../../common/ViewModal';
 import { BASE_URL } from '../../common/siteConstants';
@@ -11,6 +11,8 @@ import { BASE_URL } from '../../common/siteConstants';
 const ToolPage = () => {
   const [tools, setTools] = useState([]);
   const navigate = useNavigate();
+  console.log(tools,"toolstools");
+  
   const {
     showDeleteModal,
     showViewModal,
@@ -24,7 +26,7 @@ const ToolPage = () => {
   useEffect(() => {
     const fetchTools = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/api/getallbot`); 
+        const response = await axios.get(`${BASE_URL}/api/getallbot`);
         setTools(response.data);
       } catch (error) {
         console.error("Error fetching tools:", error);
@@ -57,8 +59,8 @@ const ToolPage = () => {
     "Email": "email",
     "Referral": "referral",
     "Role": "role",
-    "Plan":"plan"
-   
+    "Plan": "plan"
+
   };
   return (
     <div className="tool-page">
@@ -66,30 +68,30 @@ const ToolPage = () => {
       {/* <div>
         <Link to='/addTool'>Add Tool</Link>
       </div> */}
-      <Table 
-        data={tools} 
+      <Table
+        data={tools}
         columns={columns}
-        onView={handleOpenViewModal} 
+        onView={handleOpenViewModal}
         onUpdate={(item) => navigate(`/user/edit/${item._id}`)}
 
-        onDelete={handleOpenDeleteModal} 
+        onDelete={handleOpenDeleteModal}
       />
-      
-      
-        <DeleteConfirmationModal
-        show={showDeleteModal}
-          onHide={handleCloseDeleteModal} 
-          onConfirm={handleDeleteConfirm}
-          message={`Are you sure you want to delete ${selectedItem?.title}?`}
-        />
 
-<ViewModal
-          show={showViewModal}
-          onHide={handleCloseViewModal}
-          data={selectedItem}
-          fields={fieldsToShow}
-        />
-      
+
+      <DeleteConfirmationModal
+        show={showDeleteModal}
+        onHide={handleCloseDeleteModal}
+        onConfirm={handleDeleteConfirm}
+        message={`Are you sure you want to delete ${selectedItem?.title}?`}
+      />
+
+      <ViewModal
+        show={showViewModal}
+        onHide={handleCloseViewModal}
+        data={selectedItem}
+        fields={fieldsToShow}
+      />
+
     </div>
   );
 };
