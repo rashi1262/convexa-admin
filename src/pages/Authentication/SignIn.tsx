@@ -31,7 +31,7 @@ const SignIn: React.FC = () => {
       let res;
       try {
         // Attempt login
-        res = await axios.post(`${BASE_URL}/api/login`, { email: user.email });
+        res = await axios.post(`${BASE_URL}/api/partnerlogin`, { email: user.email });
       } catch (err) {
         if (err.response && err.response.status === 404) {
           toast.error("User not found. Please sign up first.");

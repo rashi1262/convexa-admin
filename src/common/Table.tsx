@@ -2,7 +2,7 @@
 import React from 'react';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 
-const TableThree = ({ data, columns, onDelete, onView, onUpdate }) => {
+const TableThree = ({ data, columns, onDelete, onView, onUpdate, onToggleRole }) => {
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -26,8 +26,17 @@ const TableThree = ({ data, columns, onDelete, onView, onUpdate }) => {
                   {columns.map((column) => (
                     <td key={column.field} className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                       <h5 className="font-medium text-black dark:text-white">
-                        {item[column.field]}
-                      </h5>
+                        {typeof item[column.field] === 'boolean' ? (
+                          <button
+                          onClick={() => onToggleRole(item)}
+                          className={`inline-block px-2 py-1 text-xs font-semibold rounded cursor-pointer 
+                            ${item[column.field] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+                        >
+                          {item[column.field] ? 'Partner' : 'User'}
+                        </button>
+                        ) : (
+                          item[column.field]
+                        )}                      </h5>
                     </td>
                   ))}
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -35,12 +44,15 @@ const TableThree = ({ data, columns, onDelete, onView, onUpdate }) => {
                       <button className="hover:text-primary" aria-label="View" onClick={() => onView(item)}>
                         <FaEye />
                       </button>
-                      <button className="hover:text-primary" aria-label="Edit" onClick={() => onUpdate(item)}>
-                        <FaEdit />
-                      </button>
+                      {onUpdate && (
+                        <button className="hover:text-primary" aria-label="Edit" onClick={() => onUpdate(item)}>
+                          <FaEdit />
+                        </button>
+                      )}
                       <button className="hover:text-primary" aria-label="Delete" onClick={() => onDelete(item)}>
                         <FaTrash />
                       </button>
+
                     </div>
                   </td>
                 </tr>

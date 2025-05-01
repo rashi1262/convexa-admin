@@ -3,6 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import {  BiUser } from "react-icons/bi";
 import { FaHandshake } from 'react-icons/fa';
+import { useAuth } from '../../common/ProtectedRoutes';
 
 
 
@@ -14,6 +15,7 @@ interface SidebarProps {
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const location = useLocation();
   const { pathname } = location;
+  const { role } = useAuth(); // get the current user's role
 
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
@@ -99,16 +101,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       {/* <!-- SIDEBAR HEADER --> */}
 
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
-        {/* <!-- Sidebar Menu --> */}
         <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
-          {/* <!-- Menu Group --> */}
           <div>
             <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
               MENU
             </h3>
 
             <ul className="mb-6 flex flex-col gap-1.5">
-              {/* <!-- Menu Item Dashboard --> */}
               <SidebarLinkGroup
                 activeCondition={
                   pathname === '/' || pathname.includes('dashboard')
@@ -200,6 +199,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Dashboard --> */}
 
               {/* <!-- Menu Item Calendar --> */}
+              {role === 'admin' && (
+
               <li>
                 <NavLink
                   to="/users"
@@ -222,6 +223,34 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Partners
                 </NavLink>
               </li>
+                )}
+              {role === 'partner' && (
+
+              <li>
+                <NavLink
+                  to="/store"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('calendar') &&
+                    'bg-graydark dark:bg-meta-4'
+                    }`}
+                >
+                  <BiUser />
+                  Clients
+                
+                  
+                </NavLink>
+                <NavLink
+                  to="/agents"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('calendar') &&
+                    'bg-graydark dark:bg-meta-4'
+                    }`}
+                >
+                  <FaHandshake />
+
+                  Agents
+                </NavLink>
+              </li>
+                )}
+
               {/* <li>
                 <NavLink
                   to="/category"

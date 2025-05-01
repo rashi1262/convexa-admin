@@ -10,7 +10,8 @@ import { BASE_URL } from '../../common/siteConstants';
 
 const Partner = () => {
   const [tools, setTools] = useState([]);
-  const navigate = useNavigate();
+  console.log(tools,"toolstools");
+  
   const {
     showDeleteModal,
     showViewModal,
@@ -24,8 +25,12 @@ const Partner = () => {
   useEffect(() => {
     const fetchTools = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/partner/getAllPartners`); 
-        setTools(response.data);
+        const response = await axios.get(`${BASE_URL}/partner/getAllPartners`);
+        const modifiedData = response.data.map(item => ({
+          ...item,
+          isPartner: item.role === 'partner', // Adds true/false based on role
+        }));
+        setTools(modifiedData);
       } catch (error) {
         console.error("Error fetching tools:", error);
       }
@@ -45,12 +50,29 @@ const Partner = () => {
       handleCloseDeleteModal();
     }
   };
+  const handleToggleRole = async (item) => {
+    const newRole = item.isPartner ? 'user' : 'partner';
+  
+    try {
+      const response = await axios.put(`${BASE_URL}/partner/updateRole/${item._id}`, { role: newRole });
+      const updatedItem = response.data;
+  
+      setTools(prev =>
+        prev.map(t => t._id === item._id ? { ...t, role: updatedItem.role, isPartner: updatedItem.role === 'partner' } : t)
+      );
+    } catch (error) {
+      console.error("Error toggling role:", error);
+    }
+  };
+  
 
   const columns = [
     { field: 'companyName', header: 'companyName' },
     { field: 'email', header: 'Email' },
     { field: 'phone', header: 'Phone' },
     { field: 'city', header: 'City' },
+    { field: 'isPartner', header: 'Is Partner' },
+
   ];
 
   const fieldsToShow = {
@@ -78,7 +100,8 @@ const Partner = () => {
         data={tools} 
         columns={columns}
         onView={handleOpenViewModal} 
-        onUpdate={(item) => navigate(`/partner/edit/${item._id}`)}
+        // onUpdate={(item) => navigate(`/partner/edit/${item._id}`)}
+        onToggleRole={handleToggleRole}
 
         onDelete={handleOpenDeleteModal} 
       />
