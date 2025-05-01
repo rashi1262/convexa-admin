@@ -30,7 +30,7 @@ const AgentDetail = () => {
   const handleOwnershipTransfer = async () => {
     setIsTransferring(true);
     try {
-      const invitationLink = `http://localhost:8080/auth/${agent._id}?id=${agent.clientId._id}`;
+      const invitationLink = `https://convexa-ai.netlify.app/auth/${agent._id}?id=${agent.clientId._id}`;
       const htmlContent = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ccc; padding: 20px; border-radius: 8px;">
           <h2 style="color: #333;">Agent Ownership Invitation</h2>

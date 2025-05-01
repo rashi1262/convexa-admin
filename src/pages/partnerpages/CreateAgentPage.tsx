@@ -8,11 +8,11 @@ const isValidDomain = (domain: string) => {
   return domainRegex.test(domain);
 };
 
-const generateSubdomain = (name: string) => {
+const generateSubdomain = (domain: string) => {
   const randomSuffix = Math.random().toString(36).substring(2, 8);
-  const base = name.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/gi, '');
-  return `aitools.in-${base.substring(0, 6)}${randomSuffix}`;
+  return `${domain}-${randomSuffix}`;
 };
+
 
 const CreateAgentPage = () => {
   const navigate = useNavigate();
