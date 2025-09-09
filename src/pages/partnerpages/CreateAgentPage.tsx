@@ -63,15 +63,11 @@ console.log(formData.clientId,"sdkfnksjdnk");
     setFormData(prev => ({ ...prev, [name]: value }));
 
     if (name === 'name') {
-      if (isValidDomain(value)) {
         const website = generateSubdomain(value);
         setFormData(prev => ({ ...prev, website }));
         setGeneratedWebsite(website);
         setError('');
-      } else {
-        setGeneratedWebsite('');
-        setError('Please enter a valid domain name (e.g., w3schools.com)');
-      }
+    
     }
   };
 
@@ -107,7 +103,7 @@ console.log(formData.clientId,"sdkfnksjdnk");
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           name="name"
-          placeholder="Enter a domain like w3schools.com"
+          placeholder="Enter Your Agent Name"
           value={formData.name}
           onChange={handleChange}
           className="w-full p-2 border rounded"
